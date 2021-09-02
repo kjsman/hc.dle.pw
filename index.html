@@ -75,7 +75,6 @@ fix_font()</code></pre>
             document.getElementById('copy').onclick = function(){
                 navigator.clipboard.writeText(`def fix_font():
     # From https://HC.Dle.pw, By Jinseo Kim
-    # Licensed by The Unlicense (https://unlicense.org)
     # v1.0.0
     import os
     import matplotlib as mpl
@@ -83,8 +82,9 @@ fix_font()</code></pre>
     os.system("apt-get install -y fonts-nanum")
     os.system("fc-cache -fv")
     mpl.font_manager._rebuild()
-    mpl.font_manager.findfont = mpl.font_manager.fontManager.findfont
-    mpl.backends.backend_agg.findfont = mpl.font_manager.fontManager.findfont
+    findfont = mpl.font_manager.fontManager.findfont
+    mpl.font_manager.findfont = findfont
+    mpl.backends.backend_agg.findfont = findfont
     plt.rcParams['font.family'] = "NanumBarunGothic"
     plt.rcParams['axes.unicode_minus'] = False
            
