@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta property="og:title" content="HC.Dle">
+        <meta property="og:description" content="Colab 한글 폰트 코드">
+        <meta property="og:url" content="https://hc.dle.pw">
+        <meta property="og:type" content="website">
+        <meta property="og:image" content="https://hc.dle.pw/favicon.png">
+        <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+        <link rel="canonical" href="https://hc.dle.pw">
+        <script data-goatcounter="https://jinseokim.goatcounter.com/count" defer src=/gc.js></script>
+        <title>HC.Dle</title>
+        <style>
+            body {
+                color: #333;
+                padding-left: 16px;
+                padding-right: 16px;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 700px;
+            }
+            h1 {
+                text-align: center;
+            }
+            footer { text-align: center; }
+            .sep:before { content: "|"; margin: 0 .5rem; color: #aaa; }
+            #copy {margin-right: 4px;}
+        </style>
+    </head>
+    <body>
+        <h1>HC.Dle – Colab 한글 폰트 코드</h1>
+        <p>아래 코드를 실행하면 Matplotlib의 기본 폰트가 <a href="https://hangeul.naver.com/font#experience_type3">나눔바른고딕</a>으로 설정되어, 한글이 깨지지 않게 됩니다.</p>
+        <p>코드를 실행하고 커널을 재시작할 필요가 <strong>없습니다</strong>. 실행 즉시 한글 폰트로 설정됩니다.</p>
+        <p>실행 시간은 10초 정도입니다.</p>
+        <pre>
+            <code id="magic-code" style="color:rgb(47, 51, 55); font-weight:400;background-color:rgb(246, 246, 246);background:rgb(246, 246, 246);display:block;padding:32px;margin-top:-16px;margin-left:-32px;margin-right:-32px;border-radius:8px;overflow:overlay;"><span style="color:rgb(47, 51, 55); font-weight:400;"><span style="color:rgb(1, 86, 146); font-weight:400;">def</span> <span style="color:rgb(183, 85, 1); font-weight:400;">fix_font</span>():</span>
+    <span style="color:rgb(101, 110, 119); font-weight:400;"># From https://HC.Dle.pw, By Jinseo Kim</span>
+    <span style="color:rgb(101, 110, 119); font-weight:400;"># v1.0.0</span>
+    <span style="color:rgb(1, 86, 146); font-weight:400;">import</span> os
+    <span style="color:rgb(1, 86, 146); font-weight:400;">import</span> matplotlib <span style="color:rgb(1, 86, 146); font-weight:400;">as</span> mpl
+    <span style="color:rgb(1, 86, 146); font-weight:400;">import</span> matplotlib.pyplot <span style="color:rgb(1, 86, 146); font-weight:400;">as</span> plt
+    os.system(<span style="color:rgb(84, 121, 13); font-weight:400;">&quot;apt-get install -y fonts-nanum&quot;</span>)
+    os.system(<span style="color:rgb(84, 121, 13); font-weight:400;">&quot;fc-cache -fv&quot;</span>)
+    mpl.font_manager._rebuild()
+    findfont = mpl.font_manager.fontManager.findfont
+    mpl.font_manager.findfont = findfont
+    mpl.backends.backend_agg.findfont = findfont
+    plt.rcParams[<span style="color:rgb(84, 121, 13); font-weight:400;">&#x27;font.family&#x27;</span>] = <span style="color:rgb(84, 121, 13); font-weight:400;">&quot;NanumBarunGothic&quot;</span>
+    plt.rcParams[<span style="color:rgb(84, 121, 13); font-weight:400;">&#x27;axes.unicode_minus&#x27;</span>] = <span style="color:rgb(183, 85, 1); font-weight:400;">False</span>
+           
+fix_font()</code></pre>
+        <button id="copy">복사하기</button> <span id="copy-result"></span>
+        <p><span id="good-word"></span> 하루 보내세요!</p>
+        <hr>
+        <footer>
+            In 2021 By <a href="https://kjsman.me">Jinseo Kim</a> With ❤️
+            <span class="sep"></span>
+            Licensed by <a href="https://unlicense.org">The Unlicense</a>
+        </footer>
+        <script>
+            goodWords = ["좋은", "멋진", "행복한", "편안한", "즐거운", "활기찬", "아름다운"]
+            document.getElementById('good-word').innerText = goodWords[Math.floor(goodWords.length * Math.random())];
+
+            document.getElementById('magic-code').ondblclick = function(){
+                event.preventDefault();
+                var sel = window.getSelection();
+                var range = document.createRange();
+                range.selectNodeContents(this);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+
+            document.getElementById('copy').onclick = function(){
+                navigator.clipboard.writeText(`def fix_font():
+    # From https://HC.Dle.pw, By Jinseo Kim
+    # Licensed by The Unlicense (https://unlicense.org)
+    # v1.0.0
+    import os
+    import matplotlib as mpl
+    import matplotlib.pyplot as plt
+    os.system("apt-get install -y fonts-nanum")
+    os.system("fc-cache -fv")
+    mpl.font_manager._rebuild()
+    mpl.font_manager.findfont = mpl.font_manager.fontManager.findfont
+    mpl.backends.backend_agg.findfont = mpl.font_manager.fontManager.findfont
+    plt.rcParams['font.family'] = "NanumBarunGothic"
+    plt.rcParams['axes.unicode_minus'] = False
+           
+fix_font()`).then(() => {document.getElementById('copy-result').innerText = "성공적으로 복사되었습니다!"}, () => {document.getElementById('copy-result').innerText = "복사에 실패했습니다."})
+            }
+        </script>
+    </body>
+</html>
